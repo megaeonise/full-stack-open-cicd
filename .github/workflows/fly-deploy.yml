@@ -7,6 +7,7 @@ on:
     branches: [main]
     types:
       - completed
+
 jobs:
   deploy_blog:
     name: Deploy app
@@ -15,7 +16,7 @@ jobs:
       run:
         working-directory: blog
     concurrency: deploy-group # optional: ensure only one action runs at a time
-    if: ${{ !contains(toJson(github.event.commits.*.message), '#skip') && github.event_name == 'push' }}
+    if: ${{ !contains(toJson(github.event.commits.*.message), '#skip')}}
     env:
       DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
     steps:
