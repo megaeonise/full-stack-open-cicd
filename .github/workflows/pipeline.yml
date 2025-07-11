@@ -37,6 +37,7 @@ jobs:
           npm install --legacy-peer-deps
           npm run build
           npm run test
+          ls -l
           cp -r /bloglist-frontend/dist /
       - name: e2e tests
         uses: cypress-io/github-action@v5
