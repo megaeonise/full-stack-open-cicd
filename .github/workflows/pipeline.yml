@@ -44,7 +44,9 @@ jobs:
         with:
           command: npm run test:e2e
           working-directory: blog/bloglist-frontend
-          start: npm run start
+          start: |
+            npm install --legacy-peer-deps 
+            npm run start
           wait-on: http://localhost:5173
 
   # tag_release:
