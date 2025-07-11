@@ -22,7 +22,10 @@ jobs:
       - name: ENV file creation
         run: |
           touch .env
-          echo "${{ secrets.ENV_FILE_BLOG }}" > .env
+          printf "${{ secrets.MONGODB_URI_BLOG }}" >> .env
+          printf "${{ secrets.PORT_BLOG }}" >> .env
+          printf "${{ secrets.SECRET_BLOG }}" >> .env
+          printf "${{ secrets.TEST_MONGODB_URI_BLOG }}" >> .env
           cat .env
       - name: Backend install
         run: npm install
