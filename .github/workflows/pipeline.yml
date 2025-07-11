@@ -45,7 +45,14 @@ jobs:
         with:
           command: npm run test:e2e
           working-directory: blog
-          start: npm run start:test
+          start: |
+            touch .env
+            echo "${{ secrets.MONGODB_URI_BLOG }} " >> .env
+            echo "${{ secrets.PORT_BLOG }} " >> .env
+            echo "${{ secrets.SECRET_BLOG }} " >> .env
+            echo "${{ secrets.TEST_MONGODB_URI_BLOG }} " >> .env
+            cat .env
+            npm run start:test
           wait-on: http://localhost:3003
 
   # tag_release:
