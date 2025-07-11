@@ -21,6 +21,16 @@ jobs:
       DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
     steps:
       - uses: actions/checkout@v4
+      - name: Dist creation
+        run: |
+          ls
+          cd bloglist-frontend
+          npm install --legacy-peer-deps
+          npm run build
+          ls
+          cd ..
+          cp -r bloglist-frontend/dist .
+          ls
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
         env:
