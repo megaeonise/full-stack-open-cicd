@@ -33,6 +33,7 @@ jobs:
           npm run
       - name: Frontend setup
         run: |
+          ls
           cd bloglist-frontend
           npm install --legacy-peer-deps
           npm run build
