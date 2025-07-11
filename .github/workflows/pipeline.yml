@@ -19,16 +19,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - name: backend install
+      - name: Backend install
         run: npm install
-      - name: cd to frontend
-        run: cd blog/bloglist-frontend
-      - name: frontend install
-        run: npm install
-      - name: frontend build
-        run: npm run build
-      - name: frontend test
-        run: npm run test
+      - name: Frontend setup
+        run: |
+          cd bloglist-frontend
+          npm install
+          npm run build
+          npm run test
       - name: e2e tests
         uses: cypress-io/github-action@v5
         with:
