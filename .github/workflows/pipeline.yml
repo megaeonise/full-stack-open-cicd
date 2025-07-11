@@ -43,11 +43,9 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           command: npm run test:e2e
-          working-directory: blog/bloglist-frontend
-          start: |
-            cd .. 
-            npm run start
-          wait-on: http://localhost:5173
+          working-directory: blog
+          start: npm run start
+          wait-on: http://localhost:3003
 
   # tag_release:
   #   if: ${{ !contains(toJson(github.event.commits.*.message), '#skip') && github.event_name == 'push' }}
