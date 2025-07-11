@@ -10,6 +10,11 @@ on:
 
 jobs:
   deployment_pipeline:
+    env:
+      TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI_BLOG }}
+      MONGODB_URI: ${{ secrets.MONGODB_URI_BLOG }}
+      PORT: ${{ secrets.PORT_BLOG }}
+      SECRET: ${{ secrets.TEST_MONGODB_URI_BLOG }}
     runs-on: ubuntu-22.04
     defaults:
       run:
