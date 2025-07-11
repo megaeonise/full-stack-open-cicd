@@ -41,9 +41,8 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           command: npm run test:e2e
-          start: |
-            cd blog
-            npm run start
+          working-directory: bloglist-frontend
+          start: npm run start
           wait-on: http://localhost:5173
 
   # tag_release:
