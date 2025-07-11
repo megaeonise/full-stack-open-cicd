@@ -43,17 +43,10 @@ jobs:
       - name: e2e tests
         uses: cypress-io/github-action@v5
         with:
+          env: TEST_MONGODB_URI=${{ secrets.TEST_MONGODB_URI_BLOG }}
           command: npm run test:e2e
           working-directory: blog
-          start: |
-            touch .env
-            echo "${{ secrets.MONGODB_URI_BLOG }} " >> .env
-            echo "${{ secrets.PORT_BLOG }} " >> .env
-            echo "${{ secrets.SECRET_BLOG }} " >> .env
-            echo "${{ secrets.TEST_MONGODB_URI_BLOG }} " >> .env
-            cat .env
-            ls
-            npm run start:test
+          start: npm run start:test
           wait-on: http://localhost:3003
 
   # tag_release:
