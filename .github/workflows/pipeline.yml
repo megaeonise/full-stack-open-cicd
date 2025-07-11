@@ -20,11 +20,11 @@ jobs:
         with:
           node-version: "20"
       - name: Backend install
-        run: npm install --legacy-peer-deps
+        run: npm install
       - name: Frontend setup
         run: |
           cd bloglist-frontend
-          npm install
+          npm install --legacy-peer-deps
           npm run build
           npm run test
       - name: e2e tests
