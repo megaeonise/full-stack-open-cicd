@@ -13,6 +13,7 @@
     "test:e2e": "cypress run"
   },
   "dependencies": {
+    "@vitest/mocker": "^3.0.4",
     "axios": "^1.4.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
@@ -25,7 +26,7 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
-    "@vitejs/plugin-react": "^4.0.3",
+    "@vitejs/plugin-react": "^4.6.0",
     "cypress": "^14.0.1",
     "eslint": "^9.30.1",
     "eslint-plugin-cypress": "^4.1.0",
