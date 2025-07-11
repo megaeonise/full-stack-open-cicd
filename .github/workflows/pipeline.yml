@@ -44,7 +44,7 @@ jobs:
         with:
           command: npm run test:e2e
           working-directory: blog
-          start: npm run start
+          start: npm run start:test
           wait-on: http://localhost:3003
 
   # tag_release:
