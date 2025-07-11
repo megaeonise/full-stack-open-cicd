@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: "20"
       - name: Backend install
-        run: npm install
+        run: npm install --legacy-peer-deps
       - name: Frontend setup
         run: |
           cd bloglist-frontend
