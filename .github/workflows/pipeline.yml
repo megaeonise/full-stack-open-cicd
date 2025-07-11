@@ -45,7 +45,7 @@ jobs:
           command: npm run test:e2e
           working-directory: blog/bloglist-frontend
           start: |
-            npm install --legacy-peer-deps 
+            cd .. 
             npm run start
           wait-on: http://localhost:5173
 
