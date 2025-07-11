@@ -1,0 +1,54 @@
+name: Deployment pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+jobs:
+  deployment_pipeline:
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: blog
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: backend install
+        run: npm install
+      - name: cd to frontend
+        run: cd blog/bloglist-frontend
+      - name: frontend install
+        run: npm install
+      - name: frontend build
+        run: npm run build
+      - name: frontend test
+        run: npm run test
+      - name: e2e tests
+        uses: cypress-io/github-action@v5
+        with:
+          command: npm run test:e2e
+          start: |
+            cd.. 
+            npm run start
+          wait-on: http://localhost:5173
+
+  # tag_release:
+  #   if: ${{ !contains(toJson(github.event.commits.*.message), '#skip') && github.event_name == 'push' }}
+  #   needs: [deployment_pipeline]
+  #   runs-on: ubuntu-22.04
+  #   permissions:
+  #     contents: write
+  #   steps:
+  #     - run: echo "${{ !contains(toJson(github.event.commits.*.message), '#skip') && github.event_name == 'push' }}"
+  #     - uses: actions/checkout@v4
+  #     - name: Bump version and push tag
+  #       uses: anothrNick/github-tag-action@e528bc2b9628971ce0e6f823f3052d1dcd9d512c
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         DEFAULT_BUMP: patch
