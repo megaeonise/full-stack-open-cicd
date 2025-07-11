@@ -52,6 +52,7 @@ jobs:
             echo "${{ secrets.SECRET_BLOG }} " >> .env
             echo "${{ secrets.TEST_MONGODB_URI_BLOG }} " >> .env
             cat .env
+            ls
             npm run start:test
           wait-on: http://localhost:3003
 
