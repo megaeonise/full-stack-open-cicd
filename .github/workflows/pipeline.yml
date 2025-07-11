@@ -27,8 +27,10 @@ jobs:
           printf "${{ secrets.SECRET_BLOG }}" >> .env
           printf "${{ secrets.TEST_MONGODB_URI_BLOG }}" >> .env
           cat .env
-      - name: Backend install
-        run: npm install
+      - name: Backend setup
+        run: |
+          npm install
+          npm run
       - name: Frontend setup
         run: |
           cd bloglist-frontend
