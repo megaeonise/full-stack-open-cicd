@@ -4,7 +4,8 @@
   "description": "fullstackopen part 4",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node index.js",
+    "start": "NODE_ENV=production node index.js",
+    "start_windows": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "test": "cross-env NODE_ENV=test node --test",
     "start:test": "cross-env NODE_ENV=test nodemon index.js"
@@ -12,6 +13,7 @@
   "author": "Rikth Humayun",
   "license": "Apache-2.0",
   "devDependencies": {
+    "@flydotio/dockerfile": "^0.7.10",
     "cross-env": "^7.0.3",
     "nodemon": "^3.1.9",
     "supertest": "^7.0.0"
