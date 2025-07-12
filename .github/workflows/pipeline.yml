@@ -43,6 +43,43 @@ jobs:
       #     working-directory: blog
       #     start: npm run start:test
       #     wait-on: http://localhost:3003
+  tested_blog_deployment_pipeline:
+    env:
+      TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI_BLOG }}
+      MONGODB_URI: ${{ secrets.MONGODB_URI_BLOG }}
+      PORT: ${{ secrets.PORT_BLOG }}
+      SECRET: ${{ secrets.TEST_MONGODB_URI_BLOG }}
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: tested_blog
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Backend setup
+        run: |
+          npm install
+          npm run
+      - name: Frontend setup
+        run: |
+          ls
+          cd bloglist-frontend
+          npm install --legacy-peer-deps
+          npm run build
+          npm run test
+          cd ..
+          cp -r bloglist-frontend/dist .
+      - name: e2e tests
+        uses: cypress-io/github-action@v5
+        with:
+          env: TEST_MONGODB_URI=${{ secrets.TEST_MONGODB_URI_BLOG }}
+          command: npm run test:e2e
+          working-directory: blog
+          start: npm run start:test
+          wait-on: http://localhost:3003
+
   anecdote_deployment_pipeline:
     runs-on: ubuntu-22.04
     defaults:
@@ -58,7 +95,6 @@ jobs:
           npm install
           npm run lint
           npm run build
-          npm run server
 
   tag_release:
     if: ${{ !contains(toJson(github.event.commits.*.message), '#skip') && github.event_name == 'push' }}
