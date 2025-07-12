@@ -6,7 +6,7 @@ on:
       - main
       - feature/commit_hash_on_success_message
   pull_request:
-    branches: [main, feature/commit_hash_on_success_message]
+    branches: [main]
     types: [opened, synchronize]
 
 jobs:
