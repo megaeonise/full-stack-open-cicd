@@ -55,7 +55,7 @@ jobs:
           node-version: "20"
       - name: Setup
         run: |
-          npm install
+          npm install --legacy-peer-deps
           npm run lint
           npm run build
           npm run server
