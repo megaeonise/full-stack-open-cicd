@@ -19,7 +19,8 @@ jobs:
       run:
         working-directory: blog
     concurrency: deploy-group # optional: ensure only one action runs at a time
-    if: ${{ !contains(toJson(github.event.commits.*.message), '#skip' && github.event.workflow_run.conclusion == 'success')}}
+    # if: ${{ !contains(toJson(github.event.commits.*.message), '#skip' && github.event.workflow_run.conclusion == 'success')}}
+    if: ${{ !contains(toJson(github.event.commits.*.message), '#skip')}}
     env:
       DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
     steps:
@@ -53,7 +54,8 @@ jobs:
       run:
         working-directory: redux-anecdotes
     concurrency: deploy-group # optional: ensure only one action runs at a time
-    if: ${{ !contains(toJson(github.event.commits.*.message), '#skip') && github.event.workflow_run.conclusion == 'success'}}
+    # if: ${{ !contains(toJson(github.event.commits.*.message), '#skip') && github.event.workflow_run.conclusion == 'success'}}
+    if: ${{ !contains(toJson(github.event.commits.*.message), '#skip')}}
     env:
       DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
     steps:
@@ -81,7 +83,8 @@ jobs:
       run:
         working-directory: tested_blog
     needs: [deploy_blog] # optional: ensure only one action runs at a time
-    if: ${{ !contains(toJson(github.event.commits.*.message), '#skip' && github.event.workflow_run.conclusion == 'success')}}
+    # if: ${{ !contains(toJson(github.event.commits.*.message), '#skip' && github.event.workflow_run.conclusion == 'success')}}
+    if: ${{ !contains(toJson(github.event.commits.*.message), '#skip')}}
     env:
       DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
     steps:
