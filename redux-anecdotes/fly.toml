@@ -7,9 +7,14 @@ app = 'fullstackopen-redux-anecdotes-megaeonise'
 primary_region = 'sin'
 
 [build]
+[env]
+  PORT = "3001" 
+
+[processes]
+  app = "json-server -p3001 -s ./dist --watch db.json"
 
 [http_service]
-  internal_port = 80
+  internal_port = 3001
   force_https = true
   auto_stop_machines = 'stop'
   auto_start_machines = true

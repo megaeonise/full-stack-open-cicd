@@ -1,25 +1,3 @@
-# name: Hello World!
-
-# on:
-#   push:
-#     branches:
-#       - main
-
-# jobs:
-#   hello_world_job:
-#     runs-on: ubuntu-22.04
-#     steps:
-#       - name: Say hello
-#         run: |
-#           echo "Hello World!"
-
-#       - name: Now it is
-#         run: |
-#           date
-#       - name: Directory content
-#         run: |
-#           ls -l
-
 name: Check
 
 on:
@@ -35,5 +13,5 @@ jobs:
         uses: jtalk/url-health-check-action@v4
         with:
           # Check the following URLs one by one sequentially
-          url: https://full-stack-open-bloglist-megaeonise.fly.dev
+          url: https://full-stack-open-bloglist-megaeonise.fly.dev|https://fullstackopen-redux-anecdotes-megaeonise
           max-attempts: 3

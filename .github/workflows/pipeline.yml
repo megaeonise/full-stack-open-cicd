@@ -9,7 +9,7 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  deployment_pipeline:
+  blog_deployment_pipeline:
     env:
       TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI_BLOG }}
       MONGODB_URI: ${{ secrets.MONGODB_URI_BLOG }}
@@ -24,25 +24,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - name: ENV file creation
-        run: |
-          touch .env
-          echo "${{ secrets.MONGODB_URI_BLOG }} " >> .env
-          echo "${{ secrets.PORT_BLOG }} " >> .env
-          echo "${{ secrets.SECRET_BLOG }} " >> .env
-          echo "${{ secrets.TEST_MONGODB_URI_BLOG }} " >> .env
-          cat .env
       - name: Backend setup
         run: |
           npm install
           npm run
       - name: Frontend setup
         run: |
-          ls
           cd bloglist-frontend
           npm install --legacy-peer-deps
           npm run build
-          npm run test
           cd ..
           cp -r bloglist-frontend/dist .
       - name: e2e tests
@@ -53,18 +43,33 @@ jobs:
           working-directory: blog
           start: npm run start:test
           wait-on: http://localhost:3003
+  anecdote_deployment_pipeline:
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        working-directory: redux-anecdotes
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Setup
+        run: |
+          npm run lint
+          npm run build
+          npm run server
 
-  # tag_release:
-  #   if: ${{ !contains(toJson(github.event.commits.*.message), '#skip') && github.event_name == 'push' }}
-  #   needs: [deployment_pipeline]
-  #   runs-on: ubuntu-22.04
-  #   permissions:
-  #     contents: write
-  #   steps:
-  #     - run: echo "${{ !contains(toJson(github.event.commits.*.message), '#skip') && github.event_name == 'push' }}"
-  #     - uses: actions/checkout@v4
-  #     - name: Bump version and push tag
-  #       uses: anothrNick/github-tag-action@e528bc2b9628971ce0e6f823f3052d1dcd9d512c
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #         DEFAULT_BUMP: patch
+  tag_release:
+    if: ${{ !contains(toJson(github.event.commits.*.message), '#skip') && github.event_name == 'push' }}
+    needs: [blog_deployment_pipeline, anecdote_deployment_pipeline]
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    steps:
+      - run: echo "${{ !contains(toJson(github.event.commits.*.message), '#skip') && github.event_name == 'push' }}"
+      - uses: actions/checkout@v4
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@e528bc2b9628971ce0e6f823f3052d1dcd9d512c
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch

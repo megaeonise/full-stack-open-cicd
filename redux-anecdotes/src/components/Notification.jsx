@@ -1,25 +1,17 @@
-import { useSelector, useDispatch } from "react-redux"
-import { removeNotification } from "../reducers/notificationReducer"
+import { useSelector } from "react-redux";
 
 const Notification = () => {
-  const notification = useSelector(state => state.notification)
-  const dispatch = useDispatch()
+  const notification = useSelector((state) => state.notification);
   const style = {
-    border: 'solid',
+    border: "solid",
     padding: 10,
-    borderWidth: 1
+    borderWidth: 1,
+  };
+  if (notification === "") {
+    return <></>;
+  } else {
+    return <div style={style}>{notification}</div>;
   }
-  if(notification===''){
-    return <></>
-  }
-  else{
-    return (
-      <div style={style}>
-        {notification}
-      </div>
-    )
-  }
+};
 
-}
-
-export default Notification
+export default Notification;
