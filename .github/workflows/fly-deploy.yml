@@ -2,9 +2,6 @@
 
 name: Fly Deploy
 on:
-  push:
-    branches:
-      - feature/commit_hash_on_success_message
   workflow_run:
     workflows: ["Deployment pipeline"]
     branches: [main]
