@@ -18,7 +18,7 @@ jobs:
     defaults:
       run:
         working-directory: blog
-    concurrency: deploy-group # optional: ensure only one action runs at a time
+    # concurrency: deploy-group # optional: ensure only one action runs at a time
     # if: ${{ !contains(toJson(github.event.commits.*.message), '#skip' && github.event.workflow_run.conclusion == 'success')}}
     if: ${{ !contains(toJson(github.event.commits.*.message), '#skip')}}
     env:
@@ -53,7 +53,7 @@ jobs:
     defaults:
       run:
         working-directory: redux-anecdotes
-    concurrency: deploy-group # optional: ensure only one action runs at a time
+    # concurrency: deploy-group # optional: ensure only one action runs at a time
     # if: ${{ !contains(toJson(github.event.commits.*.message), '#skip') && github.event.workflow_run.conclusion == 'success'}}
     if: ${{ !contains(toJson(github.event.commits.*.message), '#skip')}}
     env:
