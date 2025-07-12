@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - feature/commit_hash_on_success_message
   pull_request:
     branches: [main]
     types: [opened, synchronize]
@@ -93,6 +92,7 @@ jobs:
           node-version: "20"
       - name: Setup
         run: |
+          cd redux-anecdotes-frontend
           npm install --legacy-peer-deps
           npm run lint
           npm run build

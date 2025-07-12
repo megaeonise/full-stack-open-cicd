@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for fullstackopen-redux-anecdotes-megaeonise on 2025-07-12T12:36:22+06:00
+# fly.toml app configuration file generated for redux-anecdotes-megaeonise on 2025-07-12T17:31:30+06:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'fullstackopen-redux-anecdotes-megaeonise'
+app = 'redux-anecdotes-megaeonise'
 primary_region = 'sin'
 
 [build]
@@ -11,7 +11,7 @@ primary_region = 'sin'
   PORT = "3001" 
 
 [processes]
-  app = "json-server -p3001 -s ./dist --watch db.json"
+  app = "node server.js"
 
 [http_service]
   internal_port = 3001
@@ -21,7 +21,18 @@ primary_region = 'sin'
   min_machines_running = 0
   processes = ['app']
 
+[deploy]
+  strategy = "canary"
+
+
 [[vm]]
   memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
+
+[[http_service.checks]]
+  grace_period = "5s"
+  interval = "10s"
+  method = "GET"
+  timeout = "3s"
+  path = "/"

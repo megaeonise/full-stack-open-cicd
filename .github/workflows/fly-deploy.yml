@@ -27,14 +27,12 @@ jobs:
       - uses: actions/checkout@v4
       - name: Dist creation
         run: |
-          ls
           cd bloglist-frontend
           npm install --legacy-peer-deps
           npm run build
           ls
           cd ..
           cp -r bloglist-frontend/dist .
-          ls
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
         env:
@@ -62,8 +60,11 @@ jobs:
       - uses: actions/checkout@v4
       - name: Dist creation
         run: |
+          cd redux-anecdotes-frontend
           npm install --legacy-peer-deps
           npm run build
+          cd ..
+          cp -r redux-anecdotes-frontend/dist .
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
         env:
@@ -91,14 +92,11 @@ jobs:
       - uses: actions/checkout@v4
       - name: Dist creation
         run: |
-          ls
           cd bloglist-frontend
           npm install --legacy-peer-deps
           npm run build
-          ls
           cd ..
           cp -r bloglist-frontend/dist .
-          ls
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
         env:
