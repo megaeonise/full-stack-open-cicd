@@ -76,7 +76,7 @@ jobs:
         with:
           env: TEST_MONGODB_URI=${{ secrets.TEST_MONGODB_URI_BLOG }}
           command: npm run test:e2e
-          working-directory: blog
+          working-directory: tested_blog
           start: npm run start:test
           wait-on: http://localhost:3003
 
@@ -98,7 +98,12 @@ jobs:
 
   tag_release:
     if: ${{ !contains(toJson(github.event.commits.*.message), '#skip') && github.event_name == 'push' }}
-    needs: [blog_deployment_pipeline, anecdote_deployment_pipeline]
+    needs:
+      [
+        blog_deployment_pipeline,
+        anecdote_deployment_pipeline,
+        tested_blog_deployment_pipeline,
+      ]
     runs-on: ubuntu-22.04
     permissions:
       contents: write
