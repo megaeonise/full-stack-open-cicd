@@ -38,7 +38,7 @@ jobs:
       - uses: "Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9"
         if: success()
         with:
-          args: A new version of Blog deployed to https://full-stack-open-bloglist-megaeonise.fly.dev/ by ${{github.actor}}. Current commit = ${{github.sha}}.
+          args: A new version of Blog deployed to https://full-stack-open-bloglist-megaeonise.fly.dev/ by ${{github.actor}}. Current commit = ${{github.sha}}
       - uses: "Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9"
         if: failure()
         with:
@@ -66,7 +66,7 @@ jobs:
       - uses: "Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9"
         if: success()
         with:
-          args: A new version of Blog deployed to https://full-stack-open-bloglist-megaeonise.fly.dev/ by ${{github.actor}}. Current commit = ${{github.sha}}.
+          args: A new version of Blog deployed to https://full-stack-open-bloglist-megaeonise.fly.dev/ by ${{github.actor}}. Current commit = ${{github.sha}}
       - uses: "Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9"
         if: failure()
         with:
@@ -100,7 +100,7 @@ jobs:
       - uses: "Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9"
         if: success()
         with:
-          args: A new version of Blog deployed to https://full-stack-open-tested-bloglist-megaeonise.fly.dev/ by ${{github.actor}}. Current commit = ${{github.sha}}.
+          args: A new version of Blog deployed to https://full-stack-open-tested-bloglist-megaeonise.fly.dev/ by ${{github.actor}}. Current commit = ${{github.sha}}
       - uses: "Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9"
         if: failure()
         with:
