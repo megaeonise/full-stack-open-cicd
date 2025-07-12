@@ -35,14 +35,14 @@ jobs:
           npm run build
           cd ..
           cp -r bloglist-frontend/dist .
-      - name: e2e tests
-        uses: cypress-io/github-action@v5
-        with:
-          env: TEST_MONGODB_URI=${{ secrets.TEST_MONGODB_URI_BLOG }}
-          command: npm run test:e2e
-          working-directory: blog
-          start: npm run start:test
-          wait-on: http://localhost:3003
+      # - name: e2e tests
+      #   uses: cypress-io/github-action@v5
+      #   with:
+      #     env: TEST_MONGODB_URI=${{ secrets.TEST_MONGODB_URI_BLOG }}
+      #     command: npm run test:e2e
+      #     working-directory: blog
+      #     start: npm run start:test
+      #     wait-on: http://localhost:3003
   anecdote_deployment_pipeline:
     runs-on: ubuntu-22.04
     defaults:

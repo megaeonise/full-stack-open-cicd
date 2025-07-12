@@ -69,9 +69,10 @@ const BlogInfo = ({ blog, blogRefresh, user, token }) => {
           </Button>
         </form>
         <ul>
-          {blog.comments.map((comment) => (
-            <li key={Math.floor(Math.random() * 10000 + 1)}>{comment}</li>
-          ))}
+          {blog.comments &&
+            blog.comments.map((comment) => (
+              <li key={Math.floor(Math.random() * 10000 + 1)}>{comment}</li>
+            ))}
         </ul>
       </Box>
       {blog.user.username !== user.username ? null : (

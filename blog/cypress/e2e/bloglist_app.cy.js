@@ -24,7 +24,7 @@ describe("Blog app", function () {
       cy.get("#login-button").click();
       cy.get(".message")
         .should("contain", "logged in")
-        .and("have.css", "color", "rgb(0, 128, 0)");
+        .and("have.css", "color", "rgb(204, 232, 205)");
     });
 
     it("fails with wrong credentials", function () {
@@ -35,19 +35,19 @@ describe("Blog app", function () {
       cy.get("#login-button").click();
       cy.get(".error")
         .should("contain", "wrong username or password")
-        .and("have.css", "color", "rgb(255, 0, 0)");
+        .and("have.css", "color", "rgb(244, 199, 199)");
     });
   });
   describe("When logged in", function () {
     beforeEach(function () {
       cy.login({ username: "blogtester", password: "iheartblogs" });
-      cy.contains("new blog").click();
+      cy.contains("new blog").trigger("click");
     });
 
     it("a blog can be created", function () {
-      cy.get("#title").type("Cypress Title");
-      cy.get("#author").type("Singu Wasifa");
-      cy.get("#url").type("www.singufanclub.net");
+      cy.get("#title").focus().type("Cypress Title");
+      cy.get("#author").focus().type("Singu Wasifa");
+      cy.get("#url").focus().type("www.singufanclub.net");
       cy.get("#create").click();
       cy.get("#blog_title_blog_author").contains("Cypress Title Singu Wasifa");
       cy.contains("view").click();
@@ -60,11 +60,12 @@ describe("Blog app", function () {
         author: "likemaster",
         url: "www.likes.net",
       });
-      cy.contains("view").click();
-      cy.get("#liketester_likes").contains("likes 0");
-      cy.contains("hide").click();
+      cy.contains("liketester").click();
+      cy.contains("0 likes");
+      cy.get("a").contains("blogs").click();
       cy.addLikes("liketester", 1);
-      cy.get("#liketester_likes").contains("likes 1");
+      cy.contains("liketester likemaster").click();
+      cy.contains("1 likes");
     });
 
     it("a blog can be deleted", function () {
@@ -74,7 +75,7 @@ describe("Blog app", function () {
         url: "www.delete.net",
       });
       cy.contains("deletetester deletemaster");
-      cy.contains("view").click();
+      cy.contains("deletetester").click();
       cy.contains("blogtester");
       cy.get("#delete-button").click();
       cy.contains("deletetester deletemaster").should("not.exist");
