@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - feature/commit_hash_on_success_message
   pull_request:
     branches: [main]
     types: [opened, synchronize]
