@@ -97,7 +97,7 @@ jobs:
           npm run build
 
   tag_release:
-    if: ${{ !contains(toJson(github.event.commits.*.message), '#skip') && github.event_name == 'push' }}
+    if: ${{ !contains(toJson(github.event.commits.*.message), '#skip') && github.event_name == 'push' && success() }}
     needs:
       [
         blog_deployment_pipeline,

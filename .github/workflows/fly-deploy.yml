@@ -49,14 +49,16 @@ jobs:
     defaults:
       run:
         working-directory: redux-anecdotes
-    needs: [deploy_blog] # optional: ensure only one action runs at a time
+    concurrency: deploy-group # optional: ensure only one action runs at a time
     if: ${{ !contains(toJson(github.event.commits.*.message), '#skip') && github.event.workflow_run.conclusion == 'success'}}
     env:
       DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
     steps:
       - uses: actions/checkout@v4
       - name: Dist creation
-        run: npm run build
+        run: |
+          npm install
+          npm run build
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
         env:
@@ -75,7 +77,7 @@ jobs:
     defaults:
       run:
         working-directory: tested_blog
-    needs: [deploy_anecdote] # optional: ensure only one action runs at a time
+    concurrency: deploy-group # optional: ensure only one action runs at a time
     if: ${{ !contains(toJson(github.event.commits.*.message), '#skip' && github.event.workflow_run.conclusion == 'success')}}
     env:
       DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
