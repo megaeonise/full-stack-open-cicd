@@ -77,7 +77,7 @@ jobs:
     defaults:
       run:
         working-directory: tested_blog
-    concurrency: deploy-group # optional: ensure only one action runs at a time
+    needs: [deploy_blog] # optional: ensure only one action runs at a time
     if: ${{ !contains(toJson(github.event.commits.*.message), '#skip' && github.event.workflow_run.conclusion == 'success')}}
     env:
       DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
