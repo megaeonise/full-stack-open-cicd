@@ -55,6 +55,7 @@ jobs:
           node-version: "20"
       - name: Setup
         run: |
+          npm install
           npm run lint
           npm run build
           npm run server
