@@ -4,8 +4,9 @@ on:
   push:
     branches:
       - main
+      - feature/commit_hash_on_success_message
   pull_request:
-    branches: [main]
+    branches: [main, feature/commit_hash_on_success_message]
     types: [opened, synchronize]
 
 jobs:
@@ -92,7 +93,7 @@ jobs:
           node-version: "20"
       - name: Setup
         run: |
-          npm install
+          npm install --legacy-peer-deps
           npm run lint
           npm run build
 
