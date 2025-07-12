@@ -34,8 +34,8 @@ const initialBlogs = [
 let token = "";
 
 beforeEach(async () => {
-  //   await User.deleteMany({});
-  //   await Blog.deleteMany({});
+  // await User.deleteMany({});
+  // await Blog.deleteMany({});
   const newUser = {
     username: "blogtester",
     name: "blogger",
@@ -45,24 +45,40 @@ beforeEach(async () => {
   await api.post("/api/users").send(newUser).expect(201);
   const login = await api.post("/api/login").send(userLogin).expect(200);
   token = login.body.token;
-  await Blog.deleteMany({});
+  // await Blog.deleteMany({});
   // for (let i=0; i<initialBlogs.length;i++){
   //     await api.post('/api/blogs').set({Authorization: `Bearer ${token}`}).send(initialBlogs[i]).expect(201)
   // }
   //   await new Promise((r) => setTimeout(r, 2000));
-  const promiseArray = initialBlogs.map((blog) =>
-    api
-      .post("/api/blogs")
-      .set({ Authorization: `Bearer ${token}` })
-      .send(blog)
-      .expect(201)
-  );
+  // const promiseArray = initialBlogs.map((blog) =>
+  //   api
+  //     .post("/api/blogs")
+  //     .set({ Authorization: `Bearer ${token}` })
+  //     .send(blog)
+  //     .expect(201)
+  // );
 
-  await Promise.all(promiseArray);
+  // await Promise.all(promiseArray);
+  await api
+    .post("/api/blogs")
+    .set({ Authorization: `Bearer ${login.body.token}` })
+    .send(initialBlogs[0])
+    .expect(201);
+  await api
+    .post("/api/blogs")
+    .set({ Authorization: `Bearer ${login.body.token}` })
+    .send(initialBlogs[1])
+    .expect(201);
+  await api
+    .post("/api/blogs")
+    .set({ Authorization: `Bearer ${login.body.token}` })
+    .send(initialBlogs[2])
+    .expect(201);
 });
 
 describe("when there are some blogs saved initially", () => {
   test("the correct number of blogs are returned as json", async () => {
+    console.log(token);
     response = await api
       .get("/api/blogs")
       .set({ Authorization: `Bearer ${token}` })
@@ -75,6 +91,7 @@ describe("when there are some blogs saved initially", () => {
     const response = await api
       .get("/api/blogs")
       .set({ Authorization: `Bearer ${token}` });
+    console.log(response.body);
     const ids = response.body.map((r) => r.id);
     assert.strictEqual(response.body.length, ids.length);
   });

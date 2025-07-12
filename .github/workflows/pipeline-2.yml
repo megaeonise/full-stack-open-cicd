@@ -1,39 +1,39 @@
-name: Hello World!
-
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  hello_world_job:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Say hello
-        run: |
-          echo "Hello World!"
-
-      - name: Now it is
-        run: |
-          date
-      - name: Directory content
-        run: |
-          ls -l
-
-# name: Check
+# name: Hello World!
 
 # on:
-#   schedule:
-#     - cron: "0/5 * * * *"
-#     # - cron : "0 12 * * *"
+#   push:
+#     branches:
+#       - main
 
 # jobs:
-#   Check:
+#   hello_world_job:
 #     runs-on: ubuntu-22.04
 #     steps:
-#       - name: Check the deployed service URL
-#         uses: jtalk/url-health-check-action@v4
-#         with:
-#           # Check the following URLs one by one sequentially
-#           url: https://full-stack-open-pokedex-megaeonise.fly.dev/|https://full-stack-open-pokedex-megaeonise.fly.dev/health
-#           max-attempts: 3
+#       - name: Say hello
+#         run: |
+#           echo "Hello World!"
+
+#       - name: Now it is
+#         run: |
+#           date
+#       - name: Directory content
+#         run: |
+#           ls -l
+
+name: Check
+
+on:
+  schedule:
+    - cron: "0/5 * * * *"
+    # - cron : "0 12 * * *"
+
+jobs:
+  Check:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check the deployed service URL
+        uses: jtalk/url-health-check-action@v4
+        with:
+          # Check the following URLs one by one sequentially
+          url: https://full-stack-open-bloglist-megaeonise.fly.dev
+          max-attempts: 3

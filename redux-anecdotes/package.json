@@ -22,6 +22,7 @@
     "redux": "^4.2.1"
   },
   "devDependencies": {
+    "@flydotio/dockerfile": "^0.7.10",
     "@vitejs/plugin-react": "^4.0.3",
     "eslint": "^8.45.0",
     "eslint-plugin-react": "^7.32.2",

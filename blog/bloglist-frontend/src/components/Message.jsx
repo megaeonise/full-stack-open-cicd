@@ -1,20 +1,20 @@
-const Message = ( { message, isError } ) => {
-  if(message!==null){
-    if(isError){
+import { Alert } from "@mui/material";
+const Message = ({ message, isError }) => {
+  if (message !== null) {
+    if (isError) {
       return (
-        <div className="error">
+        <Alert className="error" severity="error">
           {message}
-        </div>
-      )
-    }
-    else{
+        </Alert>
+      );
+    } else {
       return (
-        <div className="message">
+        <Alert className="message" severity="success">
           {message}
-        </div>
-      )
+        </Alert>
+      );
     }
   }
-}
+};
 
-export default Message
+export default Message;
