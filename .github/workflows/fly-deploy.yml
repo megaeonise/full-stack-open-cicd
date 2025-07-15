@@ -15,22 +15,21 @@ jobs:
     defaults:
       run:
         working-directory: blog
-    concurrency: deploy-group # optional: ensure only one action runs at a time
-    if: ${{ !contains(toJson(github.event.commits.*.message), '#skip' && github.event.workflow_run.conclusion == 'success')}}
+    # concurrency: deploy-group # optional: ensure only one action runs at a time
+    # if: ${{ !contains(toJson(github.event.commits.*.message), '#skip' && github.event.workflow_run.conclusion == 'success')}}
+    if: ${{ !contains(toJson(github.event.commits.*.message), '#skip')}}
     env:
       DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
     steps:
       - uses: actions/checkout@v4
       - name: Dist creation
         run: |
-          ls
           cd bloglist-frontend
           npm install --legacy-peer-deps
           npm run build
           ls
           cd ..
           cp -r bloglist-frontend/dist .
-          ls
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
         env:
@@ -38,7 +37,7 @@ jobs:
       - uses: "Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9"
         if: success()
         with:
-          args: A new version of Blog deployed to https://full-stack-open-bloglist-megaeonise.fly.dev/ by ${{github.actor}}
+          args: A new version of Blog deployed to https://full-stack-open-bloglist-megaeonise.fly.dev/ by ${{github.actor}}. Current commit = ${{github.sha}}
       - uses: "Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9"
         if: failure()
         with:
@@ -49,16 +48,20 @@ jobs:
     defaults:
       run:
         working-directory: redux-anecdotes
-    concurrency: deploy-group # optional: ensure only one action runs at a time
-    if: ${{ !contains(toJson(github.event.commits.*.message), '#skip') && github.event.workflow_run.conclusion == 'success'}}
+    # concurrency: deploy-group # optional: ensure only one action runs at a time
+    # if: ${{ !contains(toJson(github.event.commits.*.message), '#skip') && github.event.workflow_run.conclusion == 'success'}}
+    if: ${{ !contains(toJson(github.event.commits.*.message), '#skip')}}
     env:
       DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
     steps:
       - uses: actions/checkout@v4
       - name: Dist creation
         run: |
-          npm install
+          cd redux-anecdotes-frontend
+          npm install --legacy-peer-deps
           npm run build
+          cd ..
+          cp -r redux-anecdotes-frontend/dist .
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
         env:
@@ -66,7 +69,7 @@ jobs:
       - uses: "Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9"
         if: success()
         with:
-          args: A new version of Blog deployed to https://full-stack-open-bloglist-megaeonise.fly.dev/ by ${{github.actor}}
+          args: A new version of Anecdote deployed to https://redux-anecdotes-megaeonise.fly.dev/ by ${{github.actor}}. Current commit = ${{github.sha}}
       - uses: "Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9"
         if: failure()
         with:
@@ -78,21 +81,19 @@ jobs:
       run:
         working-directory: tested_blog
     needs: [deploy_blog] # optional: ensure only one action runs at a time
-    if: ${{ !contains(toJson(github.event.commits.*.message), '#skip' && github.event.workflow_run.conclusion == 'success')}}
+    # if: ${{ !contains(toJson(github.event.commits.*.message), '#skip' && github.event.workflow_run.conclusion == 'success')}}
+    if: ${{ !contains(toJson(github.event.commits.*.message), '#skip')}}
     env:
       DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
     steps:
       - uses: actions/checkout@v4
       - name: Dist creation
         run: |
-          ls
           cd bloglist-frontend
           npm install --legacy-peer-deps
           npm run build
-          ls
           cd ..
           cp -r bloglist-frontend/dist .
-          ls
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
         env:
@@ -100,7 +101,7 @@ jobs:
       - uses: "Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9"
         if: success()
         with:
-          args: A new version of Blog deployed to https://full-stack-open-tested-bloglist-megaeonise.fly.dev/ by ${{github.actor}}
+          args: A new version of Tested Blog deployed to https://full-stack-open-tested-bloglist-megaeonise.fly.dev/ by ${{github.actor}}. Current commit = ${{github.sha}}
       - uses: "Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9"
         if: failure()
         with:
